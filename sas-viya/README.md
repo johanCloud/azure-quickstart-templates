@@ -1,18 +1,16 @@
 # SAS Viya Quickstart Template for Azure
 
-<IMG SRC="https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/PublicLastTestDate.svg" />&nbsp;
-<IMG SRC="https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/PublicDeployment.svg" />&nbsp;
+![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/PublicLastTestDate.svg)
+![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/PublicDeployment.svg)
 
-<IMG SRC="https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/FairfaxLastTestDate.svg" />&nbsp;
-<IMG SRC="https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/FairfaxDeployment.svg" />&nbsp;
+![Azure US Gov Last Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/FairfaxLastTestDate.svg)
+![Azure US Gov Last Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/FairfaxDeployment.svg)
 
-<IMG SRC="https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/BestPracticeResult.svg" />&nbsp;
-<IMG SRC="https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/CredScanResult.svg" />&nbsp;
+![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/BestPracticeResult.svg)
+![Cred Scan Check](https://azurequickstartsservice.blob.core.windows.net/badges/sas-viya/CredScanResult.svg)
 
-[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fsas-viya%2Fazuredeploy.json) 
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fsas-viya%2Fazuredeploy.json" target="_blank">
-    <img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.png"/>
-</a>
+[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fazure%2Fazure-quickstart-templates%2Fmaster%2Fsas-viya%2F%2Fazuredeploy.json) 
+[![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%sas-viya%2Fazuredeploy.json)
 
 **Note:** For the current operational status of this Quickstart, click [here](https://github.com/sassoftware/quickstart-sas-viya-azure/tree/master) to redirect to the SAS repository.
 
@@ -28,48 +26,63 @@ This Quickstart is a reference architecture for users who want to deploy the SAS
 For assistance with SAS software, contact  [SAS Technical Support](https://support.sas.com/en/technical-support.html).   When you contact support, you will be required to provide information, such as your SAS site number, company name, email address, and phone number, that identifies you as a licensed SAS software customer. 
  
 ## Contents
-1. [Solution Summary](#Summary)
-    1. [Costs and Licenses](#Costs)
-1. [Prerequisites](#Prerequisites)
-    1. [Upload the License File to an Azure Blob](#License)
-    1. [Create a Mirror Repository](#Mirror)
-1. [Best Practices When Deploying SAS Viya on Azure](#Best-Practices)
-1. [Deployment Steps](#Deployment)
-1. [Additional Deployment Details](#deployment-details)
-    1. [User Accounts](#useraccounts)
-    1. [Important File and Folder Locations](#filefolderlocations)
-1. [Optional Post-Deployment](#Post-Deployment)
-    1. [Configure a Certificate Authority-Signed Digital Certificate and Custom DNS Name](#DNS)
-    1. [Enable Access to Existing Data Sources](#DataSources)
-    1. [Validate the Server Certificate If Using SAS/ACCESS](#ACCESSCertWarn)
-    1. [Set Up ODBC and Microsoft SQL Server](#MSSQL)
-    1. [Set Up SAS Data Agent](#DataAgent)
-1. [Usage](#Usage)
-1. [Troubleshooting](#Tshoot)
-    1. [Reviewing the Logs](#ReviewLog)
-    1. [Restarting the SAS Services](#RestartServices)
-    1. [Uncommon Errors that Require a Redeploy](#UncommonErrors)
-1. [Appendix A: Configuring the Identities Service](#AddA)
-    1. [Verify Security Settings](#AddAVerify)
-    1. [Create a Service Account](#AddACreateServiceAccount)
-    1. [Configure the Identities Service](#AddAConfigureIdentitiesService)
-    1. [Verify the Configuration](#AddAVerifyTheConfiguration)
-    1. [Configure PAM for SAS Studio](#AddAConfigurePam)
-1. [Appendix B: Managing Users for the Provided OpenLDAP Server](#AddB)
-    1. [List all Users and Groups](#AddBLoginAndList)
-    1. [Add a User](#AddBAddUser)
-    1. [Change or Set a Password](#AddBPassword)
-    1. [Delete a User](#AddBDeleteUser)
-1. [Appendix C: Security Considerations](#Security)
-    1. [	Network Security Groups ](#nsc)
-    1. [Hardening Provided OpenLDAP Security ](#hard)
-    1. [Data Security](#datasec)
-    1. [ Updating the Operating System](#updates)
+- [SAS Viya Quickstart Template for Azure](#sas-viya-quickstart-template-for-azure)
+  - [Contents](#contents)
+  - [Solution Summary](#solution-summary)
+    - [Costs and Licenses](#costs-and-licenses)
+      - [CAS Controller VM](#cas-controller-vm)
+      - [SAS Viya Services VM](#sas-viya-services-vm)
+  - [Prerequisites](#prerequisites)
+    - [Upload the License File to an Azure Blob](#upload-the-license-file-to-an-azure-blob)
+    - [(Optional) Create a Mirror Repository](#optional-create-a-mirror-repository)
+    - [Upload the Entire Mirror to Azure Blob Storage](#upload-the-entire-mirror-to-azure-blob-storage)
+  - [Best Practices When Deploying SAS Viya on Azure](#best-practices-when-deploying-sas-viya-on-azure)
+  - [Deployment Steps](#deployment-steps)
+  - [Additional Deployment Details](#additional-deployment-details)
+  - [User Accounts](#user-accounts)
+    - [Important File and Folder Locations](#important-file-and-folder-locations)
+  - [Optional Post-Deployment](#optional-post-deployment)
+    - [Configure a Certificate Authority-Signed Digital Certificate and Custom DNS Name](#configure-a-certificate-authority-signed-digital-certificate-and-custom-dns-name)
+    - [Enable Access to Existing Data Sources](#enable-access-to-existing-data-sources)
+    - [Validate the Server Certificate if Using SAS/ACCESS](#validate-the-server-certificate-if-using-sasaccess)
+    - [Set Up ODBC and Microsoft SQL Server](#set-up-odbc-and-microsoft-sql-server)
+    - [Set Up SAS Data Agent](#set-up-sas-data-agent)
+  - [Usage](#usage)
+  - [Troubleshooting](#troubleshooting)
+    - [Review the Log Files](#review-the-log-files)
+      - [Ansible Server Log Files:](#ansible-server-log-files)
+      - [Services Server Log Files](#services-server-log-files)
+      - [Controller Server Log Files](#controller-server-log-files)
+    - [Restarting the SAS Services](#restarting-the-sas-services)
+      - [Checking the status of the services through Viya-Ark](#checking-the-status-of-the-services-through-viya-ark)
+      - [Restarting the services through Viya-Ark](#restarting-the-services-through-viya-ark)
+      - [SSH Error: data could not be sent to remote host](#ssh-error-data-could-not-be-sent-to-remote-host)
+      - [Yum repo errors “Error: Package 'package' Requires: 'another package' Available"](#yum-repo-errors-error-package-package-requires-another-package-available%22)
+  - [Appendix A: Configuring the Identities Service](#appendix-a-configuring-the-identities-service)
+    - [Verify Security Settings](#verify-security-settings)
+    - [Create a Service Account](#create-a-service-account)
+    - [Configure the Identities Service](#configure-the-identities-service)
+      - [Connection](#connection)
+      - [User](#user)
+      - [Group](#group)
+    - [Verify the Configuration](#verify-the-configuration)
+    - [Configure PAM for SAS Studio](#configure-pam-for-sas-studio)
+  - [Appendix B: Managing Users for the Provided OpenLDAP Server](#appendix-b-managing-users-for-the-provided-openldap-server)
+    - [List All Users and Groups](#list-all-users-and-groups)
+    - [Add a User](#add-a-user)
+    - [Change or Set a Password](#change-or-set-a-password)
+    - [Delete a User](#delete-a-user)
+  - [Appendix C: Security Considerations](#appendix-c-security-considerations)
+    - [Hardening Provided OpenLDAP Security](#hardening-provided-openldap-security)
+    - [Updating the Operating System](#updating-the-operating-system)
+  - [Appendix D: Telemetry](#appendix-d-telemetry)
+    - [Notification for Resource Manager Template Deployments](#notification-for-resource-manager-template-deployments)
+
 <a name="Summary"></a>
 ## Solution Summary
 By default, Quickstart deployments enable Transport Layer Security (TLS) for secure communication.
 
-This SAS Viya Quickstart Template for Azure will take a generic license for SAS Viya and deploy SAS into its own network. The deployment creates the network and other infrastructure.  After the deployment process completes, you will have the outputs for the web endpoints for a SAS Viya deployment on recommended virtual machines (VMs). 
+This SAS Viya Quickstart Template for Azure will take a SAS provided license package for SAS Viya and deploy SAS into its own network. The deployment creates the network and other infrastructure.  After the deployment process completes, you will have the outputs for the web endpoints for a SAS Viya deployment on recommended virtual machines (VMs). 
 
 When you deploy the Quickstart with default parameters in a symmetric multiprocessing (SMP) environment, the following SAS Viya environment is built in the Microsoft Azure cloud, shown in Figure 1.  In SMP environments, the **CAS Node Count** parameter is set to one, indicating that only one CAS controller is configured.
 
@@ -88,7 +101,7 @@ For details, see [SAS Viya 3.5 for Linux: Deployment Guide](https://go.documenta
 <a name="Costs"></a>
 ### Costs and Licenses
 You are responsible for the cost of the Azure services used while running this Quickstart deployment. There is no additional cost for using the Quickstart.
-You will need a SAS license to launch this Quickstart. Your SAS account team and the SAS Enterprise Excellence Center can advise on the appropriate software licensing and sizing to meet workload and performance needs.
+You will need a SAS license {emailed from SAS as `SAS_Viya_deployment_data.zip`} in order to launch this Quickstart. Your SAS account team and the SAS Enterprise Excellence Center can advise on the appropriate software licensing and sizing to meet workload and performance needs.
 SAS Viya Quickstart Template for Azure creates three instances, including: 
 * 1 compute virtual machine (VM), the Cloud Analytic Services (CAS) controller
 * 1 VM for administration, the Ansible controller
@@ -118,23 +131,24 @@ Before deploying SAS Viya Quickstart Template for Azure, you must have the follo
  		SAS Visual Analytics 8.5 on Linux
 		SAS Visual Statistics 8.5 on Linux
         SAS Visual Data Mining and Machine Learning 8.5 on Linux
-*  The license file in .zip format from your software order uploaded to an Azure blob
+*  The license file {emailed from SAS as `SAS_Viya_deployment_data.zip`} which describes your SAS Software Order and is uploaded to an Azure Blob (see below)
 *  Verification that your required SAS Viya file upload sizes do not exceed the limits of the Application Gateway. For details about limits, see 
 ["Application Gateway limits."](https://docs.microsoft.com/en-us/azure/azure-subscription-service-limits?toc=%2fazure%2fapplication-gateway%2ftoc.json#application-gateway-limits)
 * A resource group that does not already contain a Quickstart deployment. For more information, see [Resource groups](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 
 <a name="License"></a>
 ### Upload the License File to an Azure Blob
-When you run the deployment, you will need the blob Shared Access Signature (SAS) URL as a parameter. 
+The QuickStart deployment requires a parameter `Deployment Data Location`, which is the Shared Access Signature (SAS) URI for the SAS Softwared License. 
 
-Before you run the deployment:
-1. Upload the license file to Azure Blob Storage.  Follow the Microsoft Azure instructions to 
+1. Upload the `SAS_Viya_deployment_data.zip` {emailed from SAS} to Azure Blob Storage.  It's suggested that you create a Blob directory named `license` with a single object `SAS_Viya_deployment_data.zip`.  Follow the Microsoft Azure instructions to 
 ["Create a Container"](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal#create-a-container) and 
 ["Upload a Block Blob."](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal#upload-a-block-blob)
 
-2. Create a Shared Access Signature (SAS) token. Follow these steps to create a Service SAS: 
-    * Navigate to the license file blob and select **Generate SAS**, and then click **Generate blob SAS** token and URL.
-    * Make a note of the blob SAS URL for use during deployment.
+2. Create a Shared Access Signature (SAS) URI token: 
+    * From the Azure Portal | Storage Account | Storage Explorer (preview), navigate to the Blob directory named `license` (assuming you followed the suggestion)
+    * Right click and select **Generate Shared Access Signature**
+    * Review the settings, ensure Read & List are checked, then click **Create** token
+    * Copy the URI and save it to be used as a Parameter in the QuickStart.
     
 For details, see ["Using Shared Access Signatures."](https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1)
 
@@ -559,7 +573,7 @@ ldappasswd -h localhost -s USERPASSWORD -W -D cn=admin,dc=sasviya,dc=com -x "uid
 ldapdelete –h localhost -W -D "cn=admin,dc=sasviya,dc=com" "uid=newuser,ou=users,dc=sasviya,dc=com"
 ```
 <a name="Security"></a>
-## Appendix C Security Considerations
+## Appendix C: Security Considerations
 
 <a name="nsc"></a>
 ###	Network Security Groups 
@@ -586,3 +600,9 @@ The Quickstart deployment is built to get you "up and running" quickly. However,
 During installation, yum updates servers but will not automatically apply patches after deployment is complete. To apply patches either:
 * Schedule updates on the boxes through cron 
 * Regularly log on to the system and run a "yum update" command to keep security patches up to date on the operating system
+
+<a name="telemetry"></a>
+## Appendix D: Telemetry
+<a name="msnotification"></a>
+### Notification for Resource Manager Template Deployments
+When you deploy this template, Microsoft is able to identify the installation of SAS software with the Azure resources that are deployed. Microsoft is able to correlate the Azure resources that are used to support the software. Microsoft collects this information to provide the best experiences with their products and to operate their business. The data is collected and governed by Microsoft's privacy policies, which can be found at [Microsoft Trust Center](https://www.microsoft.com/trustcenter).
